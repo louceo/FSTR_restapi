@@ -24,9 +24,8 @@ class Level_diff(models.Model):
 
 
 class Img(models.Model):
-    # data = models.ImageField(
-    #     upload_to='files/images')
-    data = models.CharField(max_length=255)
+    data = models.ImageField(
+        upload_to='files/images')
     title = models.CharField(max_length=255)
 
 
@@ -45,7 +44,7 @@ class Pereval_added(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     coords = models.ForeignKey(Coordinates, on_delete=models.CASCADE)
     level = models.ForeignKey(Level_diff, on_delete=models.CASCADE)
-    images = models.ForeignKey(Img, on_delete=models.CASCADE)
+    images = models.ManyToManyField(Img)
     status = models.CharField(max_length=10, choices=status_choices,
                               default=status_choices[0])
 

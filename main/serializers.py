@@ -1,6 +1,7 @@
 from . import models
 from rest_framework import serializers
 from drf_writable_nested import WritableNestedModelSerializer
+from drf_extra_fields.fields import Base64ImageField
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -9,8 +10,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+# Used "drf-extra-fields" module to easily convert Base64 to Image
 class ImgSerializer(serializers.ModelSerializer):
-    class Meta:
+    data = Base64ImageField()
+    
+    class Meta: 
         model = models.Img
         fields = '__all__'
 
@@ -30,7 +34,7 @@ class LevelSerializer(serializers.ModelSerializer):
 # Used "drf_writable_nested" module to make writing data with nested serializers easier
 class PerevalSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
     user = UserSerializer()
-    images = ImgSerializer()
+    images = ImgSerializer(many=True)
     coords = CoordinatesSerializer()
     level = LevelSerializer()
 
