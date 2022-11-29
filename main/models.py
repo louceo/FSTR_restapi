@@ -7,26 +7,30 @@ class User(models.Model):
     name = models.CharField(max_length=50)
     otc = models.CharField(max_length=50)
     phone = models.CharField(max_length=50, unique=True)
+    
 
 
-class coordinates(models.Model):
+class Coordinates(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     height = models.FloatField()
 
 
-class level_diff(models.Model):
-    season = models.CharField(max_length=10)
-    difficulty = models.CharField(max_length=2)
+class Level_diff(models.Model):
+    winter = models.CharField(max_length=2)
+    summer = models.CharField(max_length=2)
+    autumn = models.CharField(max_length=2)
+    spring = models.CharField(max_length=2)
 
 
-class img(models.Model):
-    data = models.ImageField(
-        upload_to=None, height_field=None, width_field=None, max_length=None)
+class Img(models.Model):
+    # data = models.ImageField(
+    #     upload_to='files/images')
+    data = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
 
 
-class pereval_added(models.Model):
+class Pereval_added(models.Model):
     status_choices = [
         ('new', 'new'),
         ('pending', 'pending'),
@@ -38,8 +42,10 @@ class pereval_added(models.Model):
     title = models.CharField(max_length=50, unique=True)
     other_titles = models.CharField(max_length=50)
     connect = models.TextField(max_length=255)
-    coords = models.ForeignKey(coordinates, on_delete=models.CASCADE)
-    level = models.ForeignKey(level_diff, on_delete=models.CASCADE)
-    images = models.ForeignKey(img, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    coords = models.ForeignKey(Coordinates, on_delete=models.CASCADE)
+    level = models.ForeignKey(Level_diff, on_delete=models.CASCADE)
+    images = models.ForeignKey(Img, on_delete=models.CASCADE)
     status = models.CharField(max_length=10, choices=status_choices,
                               default=status_choices[0])
+
