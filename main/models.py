@@ -7,7 +7,6 @@ class User(models.Model):
     name = models.CharField(max_length=50)
     otc = models.CharField(max_length=50)
     phone = models.CharField(max_length=50, unique=True)
-    
 
 
 class Coordinates(models.Model):
@@ -47,4 +46,3 @@ class Pereval_added(models.Model):
     images = models.ManyToManyField(Img)
     status = models.CharField(max_length=10, choices=status_choices,
                               default=status_choices[0])
-
